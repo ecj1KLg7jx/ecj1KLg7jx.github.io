@@ -1,0 +1,71 @@
+#!/bin/sh
+
+compile() {
+    # Transform plain-text input into HTML and insert it into the template.
+    # Right now this only does some URL transformations.
+
+    # Convert all plain-text links to HTML links (<a href="X">X</a>).
+    sed -E "s|([^\"\'\>=])(http[s]?://[^[:space:]]*)|\1<a href=\2>\2</a>|g
+            s|^(http[s]?://[^[:space:]]*)|<a href=\1>\1</a>|g" |
+
+    # Convert #/words to local links.
+    # Convert @/words to external HTML links.
+    sed -E "s|(#/)([^ \)]*)|\1<a href=/\2>\2</a>|g
+            s|(@/)([^ \)]*)|\1<a href=http://\2>\2</a>|g" |
+
+    # Convert [0-9] into HTML links.
+    sed -E "s|^([ -]*)\[([0-9\.]*)\]|\1<span id=\2>[\2]</span>|g
+            s|([^\"#])\[([0-9\.]*)\]|\1[<a class=t href=#\2>\2</a>]|g" |
+
+    # Insert the page into the template.
+    sed -E '/%%CONTENT%%/{r /dev/stdin
+            d;}' template.html |
+
+    # Insert the page path into the source URL.
+    sed -E "s	%%TITLE%%	${1:-home}	"
+}
+
+page() {
+  t=${1##*/}
+  t=${t%%.txt}
+  t=${t##index}
+
+  p=${1%%.txt}
+  p=${p#.}
+  test "${p##*/}" != "index" && p=$p/index
+  
+  d=${p%/*}
+  mkdir -p pub$d
+
+  case $1 in
+  *.txt)
+    compile "$t" < "src/$1" > "pub$p.html";;
+  *)
+  cp -Lf "src/$1" "pub/$1";;
+  esac
+  
+}
+
+sitemap(){
+  find src/ ! -type d|while read -r f; do
+    f=${f##src/}
+    f=${f%.txt}
+    test "$f" != "index"&&{ test "${f##*/}" != "index"&& \
+      printf "* #/$f/\n"|| \
+      printf "* #/${f%index}\n";}
+  done
+}
+
+main() {
+  rm -rf pub
+  mkdir -p  pub
+  
+  # sitemap > src/map.txt
+  
+  (cd src/&&find . ! -type d) | while read -r page; do
+    printf "$page\n"
+    page "$page"
+  done
+}
+
+main "$@"

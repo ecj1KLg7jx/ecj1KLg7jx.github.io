@@ -35,13 +35,13 @@ page() {
   test "${p##*/}" != "index" && p=$p/index
   
   d=${p%/*}
-  mkdir -p pub$d
+  mkdir -p docs$d
 
   case $1 in
   *.txt)
-    compile "$t" < "src/$1" > "pub$p.html";;
+    compile "$t" < "src/$1" > "docs$p.html";;
   *)
-  cp -Lf "src/$1" "pub/$1";;
+  cp -Lf "src/$1" "docs/$1";;
   esac
   
 }
@@ -57,8 +57,8 @@ sitemap(){
 }
 
 main() {
-  rm -rf pub
-  mkdir -p  pub
+  rm -rf docs
+  mkdir -p docs
   
   # sitemap > src/map.txt
   

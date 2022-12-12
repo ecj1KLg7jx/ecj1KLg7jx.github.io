@@ -66,6 +66,8 @@ main() {
     printf "$page\n"
     page "$page"
   done
+
+  cp 404.html docs/
 }
 
 main "$@"

@@ -1,0 +1,17 @@
+microwa.re ------------------------------------------ 2022-12-12T16:31:39+00:00
+_______________________________________________________________________________
+
+@/microwa.re is my collection of minimal software and a small blog.
+
+Many of the software projects hosted here will by my own, and all will be
+available at the #/projects page. I have experience in C, Rust, Python, POSIX
+Shell, Java, Kotlin and a little JavaScript (although I try to avoid it when
+possible).
+
+My blog will act as a mental dump of sorts; I don't really plan to update it
+often, but whenever i find a cool bit of software or hardware, I will likely
+post it.
+
+I may also add extra pages to this site, for example, I've been thinking about
+a @/harmful.cat-v.org style page, but strictly for software.
+

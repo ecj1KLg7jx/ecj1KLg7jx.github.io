@@ -1,9 +1,6 @@
 #!/bin/sh
 
 compile() {
-    # Transform plain-text input into HTML and insert it into the template.
-    # Right now this only does some URL transformations.
-
     # Convert all plain-text links to HTML links (<a href="X">X</a>).
     sed -E "s|([^\"\'\>=])(http[s]?://[^[:space:]]*)|\1<a href=\2>\2</a>|g
             s|^(http[s]?://[^[:space:]]*)|<a href=\1>\1</a>|g" |
@@ -22,13 +19,14 @@ compile() {
             d;}' template.html |
 
     # Insert the page path into the source URL.
-    sed -E "s	%%TITLE%%	${1:-home}	"
+    sed -E "s	%%TITLE%%	${1:-microwa.re}	"
 }
 
 page() {
-  t=${1##*/}
+  t=${1#.}
   t=${t%%.txt}
-  t=${t##index}
+  t=${t%%/index}
+  t=${t##*/}
 
   p=${1%%.txt}
   p=${p#.}
@@ -46,21 +44,26 @@ page() {
   
 }
 
-sitemap(){
-  find src/ ! -type d|while read -r f; do
-    f=${f##src/}
-    f=${f%.txt}
-    test "$f" != "index"&&{ test "${f##*/}" != "index"&& \
-      printf "* #/$f/\n"|| \
-      printf "* #/${f%index}\n";}
+pad() {
+  n=$((80-$(echo "$1$2"|wc -m)-1))
+  printf "$1$(i=0;while test $i -le $n; do i=$((i+1));printf "-";done)$2\n"
+}
+
+blog(){
+  find $1 ! -type d|while read -r f; do
+    p=${f##$1}
+    p=${p%.txt}
+    p=${p%/index}
+    
+    test "$p" = "index"||pad "* $(sed 's/ .*$//;q' $f) " " #/blog/$p/"
   done
 }
 
 main() {
-  rm -rf docs
+  rm -rf docs/*
   mkdir -p docs
-  
-  # sitemap > src/map.txt
+
+  blog src/blog/ > src/blog/index.txt
   
   (cd src/&&find . ! -type d) | while read -r page; do
     printf "$page\n"

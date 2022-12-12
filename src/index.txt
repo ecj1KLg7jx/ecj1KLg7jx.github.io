@@ -1,6 +1,15 @@
-             _   _      _ _         __        __         _     _ _             
-            | | | | ___| | | ___    \ \      / /__  _ __| | __| | |            
-            | |_| |/ _ \ | |/ _ \    \ \ /\ / / _ \| '__| |/ _` | |            
-            |  _  |  __/ | | (_) |    \ V  V / (_) | |  | | (_| |_|            
-            |_| |_|\___|_|_|\___( )    \_/\_/ \___/|_|  |_|\__,_(_)            
-                                |/                                             
+
+                  xx   xx  xxxxxx   xxxxxx  xxxxxx    xxxxx                    
+                  xxx xxx    xx    xx       xx   xx  xx   xx
+                  xx x xx    xx    xx       xxxxxx   xx   xx
+                  xx   xx    xx    xx       xx  xx   xx   xx
+                  xx   xx  xxxxxx   xxxxxx  xx   xx   xxxxx 
+
+                    xx    xx   xxxxx      xxxxxx   xxxxxxx
+                    xx    xx  xx   xx     xx   xx  xx
+                    xx xx xx  xxxxxxx     xxxxxx   xxxx
+                    xxx  xxx  xx   xx     xx  xx   xx
+                    xx    xx  xx   xx  x  xx   xx  xxxxxxx
+
+
+                     ~ a collection of minimal software ~

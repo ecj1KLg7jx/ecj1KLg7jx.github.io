@@ -72,6 +72,7 @@ main() {
 
   cp 404.html docs/
   cp CNAME docs/
+  :> docs/.nojekyll
 }
 
 main "$@"

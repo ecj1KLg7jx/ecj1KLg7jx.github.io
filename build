@@ -60,8 +60,8 @@ blog(){
 }
 
 main() {
-  rm -rf docs/*
-  mkdir -p docs
+  rm -rf docs/
+  mkdir -p docs/
 
   blog src/blog/ > src/blog/index.txt
   
